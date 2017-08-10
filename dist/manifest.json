@@ -18,8 +18,8 @@
         "scripts": ["bundle-background.js"]
     },
     "browser_action": {
-        "default_title": "send message",
-        "default_popup": "popup.html"
+        "default_title": "send message"
+            // "default_popup": "popup.html"
     },
     "commands": {
         "show-app": {

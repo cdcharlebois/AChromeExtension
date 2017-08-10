@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 184);
+/******/ 	return __webpack_require__(__webpack_require__.s = 186);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -22452,7 +22452,9 @@ var Header = function (_React$Component) {
 module.exports = Header;
 
 /***/ }),
-/* 184 */
+/* 184 */,
+/* 185 */,
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22473,38 +22475,28 @@ var _Header2 = _interopRequireDefault(_Header);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // content.js
-console.log('running content script HELLO WORLD'); // runs in the client, has access to the dom but not JS
+console.log('running popup script HELLO WORLD'); // runs in the client, has access to the dom but not JS
 
-
-var FUNCS = {
-    getWindowData: function getWindowData() {
-        return window.conner;
-    }
-};
 
 chrome.runtime.sendMessage({
     greeting: "register",
-    tabType: "content"
+    tabType: "extension"
 }, function (response) {
     console.log('registered');
 });
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
-    if (request.greeting == "this is a query") {
-        var name = FUNCS.getWindowData();
-        sendResponse({ greeting: "result", data: name });
+    if (request.greeting == "hello") {
+        sendResponse({ farewell: "goodbye" });
+    } else if (request.greeting == "result") {
+        _reactDom2.default.render(_react2.default.createElement(_Header2.default, { name: request.result }), document.getElementById('root'));
     }
 });
-// var el = document.createElement('div');
-// el.id = 'root';
 
-// document.body.insertBefore(el, document.body.childNodes[0]);
-
-
-// ReactDOM.render(
-//   <Header name='Conner'/>,
-//   document.getElementById('root')
-// );
+var el = document.createElement('div');
+el.id = 'root';
+document.body.insertBefore(el, document.body.childNodes[0]);
+_reactDom2.default.render(_react2.default.createElement(_Header2.default, { name: 'Whoever you Are' }), document.getElementById('root'));
 
 /***/ })
 /******/ ]);
