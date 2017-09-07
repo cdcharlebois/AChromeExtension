@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 83);
+/******/ 	return __webpack_require__(__webpack_require__.s = 185);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 83:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -128,13 +128,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 break;
         }
     } else if (request.greeting == "query") {
-        // var content = active_tabs.find((t) => { return t.tabType == 'content' });
-        chrome.tabs.sendMessage(active_tab_content.id, { greeting: "this is a query" }, function (response) {
-            // console.log(`Thanks: ${response.data}`);
-            // var extension = active_tabs.find((t) => { return t.tabType == 'extension' });
-            // var data = { activeTabId: active_tab_content.id }
-            chrome.tabs.sendMessage(active_tab_extension.id, { greeting: "result", result: response.data });
-        });
+        console.log('B/ I received a message...');
+        console.log(request);
+        console.log('B/ relaying message to content');
+        chrome.tabs.sendMessage(active_tab_content.id, { data: request.data });
+        console.log('B/ message sent to content');
     }
     /**
      * TEST: sending data back from the content script
@@ -143,8 +141,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             console.log('B/ I received a message...');
             console.log(request);
             console.log('B/ relaying message to popup');
-            chrome.tabs.sendMessage(active_tab_extension.id, request.data);
-            console.log('B/ message sent to popup');
+            if (active_tab_extension && active_tab_extension.id) {
+                chrome.tabs.sendMessage(active_tab_extension.id, request.data);
+                console.log('B/ message sent to popup');
+            } else {
+                console.error('B/ message not sent to popup. No active extension registered.');
+            }
         }
 });
 

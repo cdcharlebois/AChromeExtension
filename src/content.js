@@ -24,13 +24,13 @@ window.addEventListener('message', function(msg) {
     }
 }, false);
 
-// // resgister the tab as a content script
-// chrome.runtime.sendMessage({
-//     greeting: "register",
-//     tabType: "content"
-// }, function(response) {
-//     console.log('registered');
-// });
+// resgister the tab as a content script
+chrome.runtime.sendMessage({
+    greeting: "register",
+    tabType: "content"
+}, function(response) {
+    console.log('registered');
+});
 
 // chrome.runtime.onMessage.addListener(
 //     function(request, sender, sendResponse) {
@@ -42,6 +42,13 @@ window.addEventListener('message', function(msg) {
 //             sendResponse({ greeting: "result", data: window.conner });
 //         }
 //     });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log('C/ I received a chrome runtime message...')
+    console.log(request);
+    console.log('C/ relaying message to inject')
+    window.postMessage(JSON.stringify({ from: 'content', to: 'inject', data: request.data }), '*')
+    console.log('C/ message sent to inject')
+});
 
 
 // add listener for client messages

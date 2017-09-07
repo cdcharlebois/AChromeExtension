@@ -90,9 +90,18 @@ mx_data_get.callback = function (result) {
     console.log('I/ got result');
     console.log(result);
     window.postMessage(JSON.stringify({ to: 'content', from: 'inject', data: result }), "*");
-    // window.dispatchEvent(new CustomEvent("getChromeData", { to: 'content', from: 'inject', data: result }));
-    // window.postMessage('Hello', '*');
 };
+window.addEventListener('message', function (msg) {
+    console.log('I/ I received a message...');
+    console.log(msg);
+    var data = JSON.parse(msg.data);
+    if (data.to === 'inject' && data.from === 'content') {
+        console.log('I/ I will now run the query...');
+        console.log(data.data.query);
+        mx_data_get.xpath = data.data.query;
+        mx.data.get(mx_data_get);
+    }
+});
 
 mx.data.get(mx_data_get);
 

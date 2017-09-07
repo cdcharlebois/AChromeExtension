@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Header from './components/Header';
+import ObjectListItem from './components/ObjectListItem';
 
 // content.js
 console.log('>>> Running Popup Scrfdsaf')
@@ -17,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('P/ I received a message...')
     console.log(request)
     if (request.greeting === 'data') {
-        ReactDOM.render( < Header name = { 'Found '+request.data.length+' objects' }  /> ,
+        ReactDOM.render(< Header name={'Found ' + request.data.length + ' objects'} data={request.data}  /> ,
             document.getElementById('root')
         );
     }
@@ -26,6 +27,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 var el = document.createElement('div');
 el.id = 'root';
 document.body.insertBefore(el, document.body.childNodes[0]);
-ReactDOM.render( < Header name = 'Whoever you Are' /> ,
+ReactDOM.render(< Header name='Whoever you Are' /> ,
     document.getElementById('root')
 );
