@@ -4,7 +4,8 @@ module.exports = {
     entry: {
         'dist/bundle-content': './src/content.js',
         'dist/bundle-background': './src/background.js',
-        'dist/bundle-popup': './src/popup.js'
+        'dist/bundle-popup': './src/popup.js',
+        'dist/bundle-inject': './src/inject.js'
     },
     output: {
         filename: '[name].js',

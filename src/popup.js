@@ -4,37 +4,28 @@ import ReactDOM from 'react-dom';
 import Header from './components/Header';
 
 // content.js
-console.log('running popup script HELLO WORLD')
+console.log('>>> Running Popup Scrfdsaf')
 
 chrome.runtime.sendMessage({
     greeting: "register",
     tabType: "extension"
-}, function (response) {
+}, function(response) {
     console.log('registered');
 });
-chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        console.log(sender.tab ?
-            "from a content script:" + sender.tab.url :
-            "from the extension");
-        if (request.greeting == "hello") {
-            sendResponse({ farewell: "goodbye" });
-        }
-        else if (request.greeting == "result") {
-            ReactDOM.render(<Header name={request.result} />,
-                document.getElementById('root')
-            );
-        }
-            
-    });
 
-
-
-
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log('P/ I received a message...')
+    console.log(request)
+    if (request.greeting === 'data') {
+        ReactDOM.render( < Header name = { 'Found '+request.data.length+' objects' }  /> ,
+            document.getElementById('root')
+        );
+    }
+});
 
 var el = document.createElement('div');
 el.id = 'root';
 document.body.insertBefore(el, document.body.childNodes[0]);
-ReactDOM.render( <Header name = 'Whoever you Are' /> ,
+ReactDOM.render( < Header name = 'Whoever you Are' /> ,
     document.getElementById('root')
 );

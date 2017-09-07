@@ -29,5 +29,8 @@
             },
             "description": "Show App"
         }
-    }
+    },
+    "web_accessible_resources": [
+        "bundle-inject.js"
+    ]
 }
